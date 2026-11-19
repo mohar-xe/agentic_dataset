@@ -1,0 +1,585 @@
+{
+  "article": 5772,
+  "article_title": "The Importance of Determination of Seat under Indian Arbitration Law",
+  "sentences": [
+    360428,
+    360429,
+    360439,
+    360450,
+    360465,
+    360477
+  ],
+  "accepted": 5,
+  "rejected": 1,
+  "reasons": {
+    "no_credible_source": 1
+  },
+  "stats": {
+    "tool_rounds": 12,
+    "accepted": 5,
+    "rewrites": 4,
+    "rejected": 1
+  },
+  "tool_calls": {
+    "spring_parse": 6,
+    "wiki_lookup": 1,
+    "article_search": 1,
+    "resolve_mention": 7
+  },
+  "roles": {
+    "360428": "a definition becomes memory",
+    "360429": "two mentions resolved in one sentence",
+    "360439": "rejected, because the name is cut off",
+    "360450": "a provision and a statute together",
+    "360465": "the same sentence settles the mention",
+    "360477": "a statute rewrite the old run could not do"
+  },
+  "formulas": {
+    "resolve_mention": [
+      "candidates are shown with evidence (no numeric score); the agent picks",
+      "memory, exact name/alias: direct match already resolved in this article",
+      "same sentence, name before mention: strongest text evidence in place",
+      "earlier sentence (alias match/name match): earlier declaration, with distance",
+      "article metadata: name listed for the whole article",
+      "memory, same kind only: weak hint, not proof",
+      "no clear single answer (none, or several equally plausible) -> reject, don't guess"
+    ],
+    "wiki_lookup": [
+      "every number/year in the surface must appear in the candidate, or it is rejected",
+      "equal names after normalization -> 1.000",
+      "otherwise 0.6*word overlap + 0.35 same year",
+      "  + 0.1 punctuation-insensitive match + 0.03 'India' in description",
+      "capped at 0.99"
+    ],
+    "coverage": [
+      "content words = words with 3+ letters or digits, minus stopwords",
+      "a word is kept when it, or its light stem, appears in the graph",
+      "coverage = kept content words / all content words",
+      "this is a rough check, not a grammar score"
+    ]
+  },
+  "graph_changes": {
+    "360428": [
+      "SPRING found a `law` node named 'Arbitration and Conciliation Act' (no year) inside `legislate-01`.",
+      "The agent made a `statute` node with :legal-name the full name, :legal-year 1996 and :wiki title, plus a `provision` node for 'Part one' linked with :legal-part-of."
+    ],
+    "360429": [
+      "SPRING output is itself invalid: `:mode imperative` is unquoted, and the core validator says variables used but never defined: ['imperative'].",
+      "SPRING has `section :mod 2` and `law :name Act`. The agent made a `provision` node with :legal-name 'section 2(2)' and linked it to the statute with :legal-part-of."
+    ],
+    "360439": [
+      "SPRING also reads the company name as only 'Ltd.' - the rest of the name is missing from the sentence itself.",
+      "The agent writes no graph: HEPL cannot be tied to a credible name."
+    ],
+    "360450": [
+      "SPRING has `section :mod 34` and `law :name Act`, and a court name 'Delhi High Court'.",
+      "The agent made the section a `provision` with :legal-name 'section 34', linked it to the full statute, and tagged the court as a `gov-entity` with :legal-type 'court'."
+    ],
+    "360465": [
+      "SPRING already found the name 'Supreme Court'.",
+      "The agent made it a `gov-entity` with :legal-type 'court' and :legal-name 'Supreme Court', and kept the judgment name."
+    ],
+    "360477": [
+      "SPRING has a `law` node named only 'Act'.",
+      "The agent made it a `statute` with the full :legal-name and :wiki title, and kept the negation (:polarity -)."
+    ]
+  },
+  "memory_before": {
+    "360428": [
+      "(empty)"
+    ],
+    "360429": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428"
+    ],
+    "360439": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429"
+    ],
+    "360450": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429"
+    ],
+    "360465": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429",
+      "section 34 [provision] from 360450",
+      "Delhi High Court [gov-entity] from 360450"
+    ],
+    "360477": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429",
+      "section 34 [provision] from 360450",
+      "Delhi High Court [gov-entity] from 360450",
+      "Supreme Court [gov-entity] from 360465",
+      "Bharat Aluminium Company [gov-entity] from 360465"
+    ]
+  },
+  "memory_after": {
+    "360428": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428"
+    ],
+    "360429": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429"
+    ],
+    "360439": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429"
+    ],
+    "360450": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429",
+      "section 34 [provision] from 360450",
+      "Delhi High Court [gov-entity] from 360450"
+    ],
+    "360465": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429",
+      "section 34 [provision] from 360450",
+      "Delhi High Court [gov-entity] from 360450",
+      "Supreme Court [gov-entity] from 360465",
+      "Bharat Aluminium Company [gov-entity] from 360465"
+    ],
+    "360477": [
+      "Arbitration and Conciliation Act, 1996 [statute] alias \"Act\" from 360428",
+      "section 2(2) [provision] from 360429",
+      "section 34 [provision] from 360450",
+      "Delhi High Court [gov-entity] from 360450",
+      "Supreme Court [gov-entity] from 360465",
+      "Bharat Aluminium Company [gov-entity] from 360465"
+    ]
+  },
+  "repairs": {
+    "360428": 0,
+    "360429": 0,
+    "360439": 0,
+    "360450": 0,
+    "360465": 0,
+    "360477": 0
+  },
+  "tools": {
+    "360428": [
+      "wiki_lookup(\"Arbitration and Conciliation Act, 1996\")",
+      "  -> Arbitration and Conciliation Act, 1996",
+      "     Q28135082 · \"Act of the Parliament of India\"",
+      "     names equal after normalization; numbers/years match"
+    ],
+    "360429": [
+      "article_search(\"the Act\", before \"However, they are only applicable…\")",
+      "  -> 0 sentences (the short form in text may use different quotes/punctuation)",
+      "resolve_mention(\"the Act\", \"However, they are only applicable…\")",
+      "  -> 1 candidate(s), shown with evidence:",
+      "     1. Arbitration and Conciliation Act, 1996 [statute]",
+      "        declared in an earlier sentence (alias match) (alias \"Act\") — sentence 360428, 1 sentence(s) earlier",
+      "        evidence: \"For instance, Part one of the Indian arbitration legislatio…\"",
+      "resolve_mention(\"section 2(2)\", \"However, they are only applicable…\")",
+      "  -> 1 candidate(s), shown with evidence:",
+      "     1. section 2(2) [provision]",
+      "        listed in article metadata"
+    ],
+    "360439": [
+      "resolve_mention(\"HEPL\", \"Ltd (‘HEPL’) entered into a contr…\")",
+      "  -> candidates: []  (nothing found in this article)"
+    ],
+    "360450": [
+      "resolve_mention(\"the Act\", \"The award was challenged under se…\")",
+      "  -> 1 candidate(s), shown with evidence:",
+      "     1. Arbitration and Conciliation Act, 1996 [statute]",
+      "        declared in an earlier sentence (alias match) (alias \"Act\") — sentence 360428, 22 sentence(s) earlier",
+      "        evidence: \"For instance, Part one of the Indian arbitration legislatio…\"",
+      "resolve_mention(\"section 34\", \"The award was challenged under se…\")",
+      "  -> 1 candidate(s), shown with evidence:",
+      "     1. section 34 [provision]",
+      "        listed in article metadata"
+    ],
+    "360465": [
+      "resolve_mention(\"the Court\", \"Of the many judgments submitted b…\")",
+      "  -> 4 candidate(s), shown with evidence:",
+      "     1. Supreme Court [gov-entity]",
+      "        declared before the mention in the same sentence — sentence 360465",
+      "        evidence: \"Of the many judgments submitted by the parties before the S…\"",
+      "     2. High Court [gov-entity]",
+      "        declared in an earlier sentence — sentence 360457, 8 sentence(s) earlier",
+      "        evidence: \"The Division Bench of the High Court confirmed the decision.\"",
+      "     3. Delhi High Court [gov-entity]",
+      "        declared in an earlier sentence — sentence 360456, 9 sentence(s) earlier",
+      "        evidence: \"The single judge of Delhi High Court decided in favour of H…\"",
+      "     4. The Supreme Court [gov-entity]",
+      "        declared in an earlier sentence — sentence 360433, 32 sentence(s) earlier",
+      "        evidence: \"The Supreme Court has decided upon these questions on 25 Se…\""
+    ],
+    "360477": [
+      "resolve_mention(\"the Act\", \"However it must be noted by the l…\")",
+      "  -> 1 candidate(s), shown with evidence:",
+      "     1. Arbitration and Conciliation Act, 1996 [statute]",
+      "        declared in an earlier sentence (alias match) (alias \"Act\") — sentence 360428, 49 sentence(s) earlier",
+      "        evidence: \"For instance, Part one of the Indian arbitration legislatio…\""
+    ]
+  },
+  "spring": {
+    "360428": {
+      "amr": "(z1 / exemplify-01\n      :ARG0 (z2 / provide-01\n            :ARG0 (z3 / part\n                  :ord (z4 / ordinal-entity\n                        :value 1)\n                  :part-of (z5 / legislate-01\n                        :ARG1 (z6 / arbitrate-01)\n                        :mod (z7 / country\n                              :name (z8 / name\n                                    :op1 \"India\"))\n                        :ARG1-of (z9 / mean-01\n                              :ARG2 (z10 / law\n                                    :name (z11 / name\n                                          :op1 \"Arbitration\"\n                                          :op2 \"and\"\n                                          :op3 \"Conciliation\"\n                                          :op4 \"Act\")\n                                    :time (z12 / date-entity\n                                          :year 1996))))))\n      :ARG0-of (z13 / enable-01\n            :ARG1 (z14 / interfere-01\n                  :ARG0 (z15 / court\n                        :mod z7)))\n      :quant (z16 / several))",
+      "status": "ok",
+      "errors": [],
+      "n_nodes": 16,
+      "n_edges": 23,
+      "model": "spring-v0_1_0"
+    },
+    "360429": {
+      "amr": "(z1 / contrast-01\n      :ARG2 (z2 / apply-02\n            :ARG1 (z3 / they)\n            :mod (z4 / only)\n            :location (z5 / arbitrate-01\n                  :location (z6 / country\n                        :name (z7 / name\n                              :op1 \"India\")))\n            :ARG1-of (z8 / mean-01\n                  :ARG2 (z9 / see-01\n                        :mode imperative\n                        :ARG0 (z10 / you)\n                        :ARG1 (z11 / section\n                              :mod 2\n                              :part-of (z12 / law\n                                    :name (z13 / name\n                                          :op1 \"Act\")))))))",
+      "status": "invalid",
+      "errors": [
+        "variables used but never defined: ['imperative']"
+      ],
+      "n_nodes": 13,
+      "n_edges": 16,
+      "model": "spring-v0_1_0"
+    },
+    "360439": {
+      "amr": "(z1 / enter-01\n      :ARG0 (z2 / company\n            :name (z3 / name\n                  :op1 \"Ltd.\"))\n      :ARG1 (z4 / contract-02\n            :ARG0 z2\n            :ARG2 (z5 / organization\n                  :name (z6 / name\n                        :op1 \"Union\"\n                        :op2 \"of\"\n                        :op3 \"India\"))\n            :ARG1-of (z7 / relate-01\n                  :ARG2 (z8 / and\n                        :op1 (z9 / extract-01\n                              :ARG1 (z10 / hydrocarbon))\n                        :op2 (z11 / develop-02\n                              :ARG1 z10)\n                        :op3 (z12 / produce-01\n                              :ARG1 z10)\n                        :location (z13 / block\n                              :mod (z14 / geography)\n                              :location (z15 / country\n                                    :name (z16 / name\n                                          :op1 \"India\"))))))\n      :time (z17 / date-entity\n            :month 11\n            :year 1996))",
+      "status": "ok",
+      "errors": [],
+      "n_nodes": 17,
+      "n_edges": 26,
+      "model": "spring-v0_1_0"
+    },
+    "360450": {
+      "amr": "(z1 / challenge-01\n      :ARG1 (z2 / award-01)\n      :ARG2 (z3 / section\n            :mod 34\n            :part-of (z4 / law\n                  :name (z5 / name\n                        :op1 \"Act\")))\n      :location (z6 / government-organization\n            :name (z7 / name\n                  :op1 \"Delhi\"\n                  :op2 \"High\"\n                  :op3 \"Court\"))\n      :time (z8 / date-entity\n            :month 7\n            :year 2013))",
+      "status": "ok",
+      "errors": [],
+      "n_nodes": 8,
+      "n_edges": 14,
+      "model": "spring-v0_1_0"
+    },
+    "360465": {
+      "amr": "(z1 / note-01\n      :ARG0 (z2 / government-organization\n            :name (z3 / name\n                  :op1 \"Supreme\"\n                  :op2 \"Court\"))\n      :ARG1 (z4 / obligate-01\n            :ARG2 (z5 / govern-01\n                  :ARG1 (z6 / controversy\n                        :ARG1-of (z7 / say-01))\n                  :ARG2 (z8 / principle\n                        :ARG1-of (z9 / lay-01\n                              :ARG2 (z10 / court-decision\n                                    :name (z11 / name\n                                          :op1 \"Bharat\"\n                                          :op2 \"Aluminium\"\n                                          :op3 \"Company\"\n                                          :op4 \"v.\"\n                                          :op5 \"Law\"))\n                              :mod (z12 / down)))))\n      :ARG1-of (z13 / include-91\n            :ARG2 (z14 / judge-01\n                  :quant (z15 / many)\n                  :ARG1-of (z16 / submit-01\n                        :ARG0 (z17 / party)\n                        :ARG2 z2\n                        :ARG3 (z18 / before\n                              :op1 z2)))))",
+      "status": "ok",
+      "errors": [],
+      "n_nodes": 18,
+      "n_edges": 26,
+      "model": "spring-v0_1_0"
+    },
+    "360477": {
+      "amr": "(z1 / obligate-01\n      :ARG2 (z2 / note-01\n            :ARG0 (z3 / person\n                  :ARG0-of (z4 / legislate-01))\n            :ARG1 (z5 / and\n                  :op1 (z6 / refer-03\n                        :polarity -\n                        :ARG0 (z7 / law\n                              :name (z8 / name\n                                    :op1 \"Act\"))\n                        :ARG1 (z9 / concept\n                              :topic (z10 / or\n                                    :op1 (z11 / seat\n                                          :location-of (z12 / arbitrate-01))\n                                    :op2 (z13 / venue\n                                          :location-of z12)))\n                        :mod (z14 / still))\n                  :op2 (z15 / provide-01\n                        :ARG0 z7\n                        :ARG1 (z16 / place\n                              :location-of z12)\n                        :mod (z17 / mere)))))",
+      "status": "ok",
+      "errors": [],
+      "n_nodes": 17,
+      "n_edges": 21,
+      "model": "spring-v0_1_0"
+    }
+  },
+  "checks": {
+    "360428": {
+      "ok": true,
+      "errors": [],
+      "coverage": 0.786,
+      "coverage_math": {
+        "kept": 11,
+        "total": 14,
+        "value": 0.786,
+        "kept_words": [
+          "1996",
+          "act",
+          "arbitration",
+          "conciliation",
+          "courts",
+          "indian",
+          "interfere",
+          "one",
+          "part",
+          "provisions",
+          "several"
+        ],
+        "missing": [
+          "enabling",
+          "instance",
+          "legislation"
+        ]
+      }
+    },
+    "360429": {
+      "ok": true,
+      "errors": [],
+      "coverage": 0.692,
+      "coverage_math": {
+        "kept": 9,
+        "total": 13,
+        "value": 0.692,
+        "kept_words": [
+          "1996",
+          "2",
+          "act",
+          "applicable",
+          "arbitration",
+          "conciliation",
+          "india",
+          "place",
+          "section"
+        ],
+        "missing": [
+          "however",
+          "only",
+          "see",
+          "where"
+        ]
+      }
+    },
+    "360450": {
+      "ok": true,
+      "errors": [],
+      "coverage": 0.846,
+      "coverage_math": {
+        "kept": 11,
+        "total": 13,
+        "value": 0.846,
+        "kept_words": [
+          "1996",
+          "2013",
+          "34",
+          "act",
+          "arbitration",
+          "award",
+          "conciliation",
+          "court",
+          "delhi",
+          "high",
+          "section"
+        ],
+        "missing": [
+          "challenged",
+          "july"
+        ]
+      }
+    },
+    "360465": {
+      "ok": true,
+      "errors": [],
+      "coverage": 0.588,
+      "coverage_math": {
+        "kept": 10,
+        "total": 17,
+        "value": 0.588,
+        "kept_words": [
+          "aluminium",
+          "bharat",
+          "company",
+          "controversy",
+          "court",
+          "governed",
+          "judgments",
+          "many",
+          "principle",
+          "supreme"
+        ],
+        "missing": [
+          "before",
+          "down",
+          "laid",
+          "noted",
+          "parties",
+          "said",
+          "submitted"
+        ]
+      }
+    },
+    "360477": {
+      "ok": true,
+      "errors": [],
+      "coverage": 0.625,
+      "coverage_math": {
+        "kept": 10,
+        "total": 16,
+        "value": 0.625,
+        "kept_words": [
+          "1996",
+          "act",
+          "arbitration",
+          "concept",
+          "conciliation",
+          "legislators",
+          "place",
+          "reference",
+          "seat",
+          "venue"
+        ],
+        "missing": [
+          "however",
+          "merely",
+          "must",
+          "noted",
+          "provides",
+          "still"
+        ]
+      }
+    },
+    "360439": {
+      "ok": null,
+      "errors": [],
+      "coverage": null,
+      "coverage_math": null
+    }
+  },
+  "records": [
+    {
+      "sentence_id": 360428,
+      "sentence_original": "For instance, Part one of the Indian arbitration legislation, i.e., the Arbitration and Conciliation Act, 1996 (the ‘Act’) has several provisions enabling Indian courts to interfere.",
+      "sentence": "For instance, Part one of the Indian arbitration legislation, i.e., the Arbitration and Conciliation Act, 1996 (the ‘Act’) has several provisions enabling Indian courts to interfere.",
+      "edits": [],
+      "amr": "(e / enable-01\n   :ARG0 (s / statute\n            :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n            :legal-name \"Arbitration and Conciliation Act, 1996\"\n            :legal-year 1996\n            :mod (i2 / india))\n   :ARG1 (p / provision\n            :legal-level \"part\"\n            :legal-name \"Part one\"\n            :legal-part-of s\n            :quant (sev / several))\n   :ARG2 (c / gov-entity\n            :legal-type \"court\"\n            :mod (i / indian))\n   :purpose (x / interfere-01\n               :ARG0 c)\n   :topic (a2 / arbitration))",
+      "base_amr": "(z1 / exemplify-01\n      :ARG0 (z2 / provide-01\n            :ARG0 (z3 / part\n                  :ord (z4 / ordinal-entity\n                        :value 1)\n                  :part-of (z5 / legislate-01\n                        :ARG1 (z6 / arbitrate-01)\n                        :mod (z7 / country\n                              :name (z8 / name\n                                    :op1 \"India\"))\n                        :ARG1-of (z9 / mean-01\n                              :ARG2 (z10 / law\n                                    :name (z11 / name\n                                          :op1 \"Arbitration\"\n                                          :op2 \"and\"\n                                          :op3 \"Conciliation\"\n                                          :op4 \"Act\")\n                                    :time (z12 / date-entity\n                                          :year 1996))))))\n      :ARG0-of (z13 / enable-01\n            :ARG1 (z14 / interfere-01\n                  :ARG0 (z15 / court\n                        :mod z7)))\n      :quant (z16 / several))",
+      "coverage": 0.786,
+      "legal_concepts": [
+        "gov-entity",
+        "provision",
+        "statute"
+      ],
+      "legal_relations": {
+        ":legal-part-of": 1
+      },
+      "legal_names": [
+        "Arbitration and Conciliation Act, 1996",
+        "Part one"
+      ],
+      "wiki_titles": [
+        "Arbitration_and_Conciliation_Act,_1996"
+      ]
+    },
+    {
+      "sentence_id": 360429,
+      "sentence_original": "However, they are only applicable where the place of arbitration is India (see section 2(2) of the Act) .",
+      "sentence": "However, they are only applicable where the place of arbitration is India (see section 2(2) of the Arbitration and Conciliation Act, 1996) .",
+      "edits": [
+        {
+          "surface": "Act",
+          "occurrence": 1,
+          "replacement": "Arbitration and Conciliation Act, 1996",
+          "resolved_to": "a1",
+          "evidence": "article",
+          "kind": "statute",
+          "start": 99,
+          "end": 102
+        }
+      ],
+      "amr": "(a / applicable\n   :polarity -\n   :ARG1 (p / provision\n            :legal-level \"sub-section\"\n            :legal-name \"section 2(2)\"\n            :legal-part-of (s / statute\n                              :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                              :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (i / india)\n   :condition (pl / place\n                 :mod (a2 / arbitration)))",
+      "base_amr": "(z1 / contrast-01\n      :ARG2 (z2 / apply-02\n            :ARG1 (z3 / they)\n            :mod (z4 / only)\n            :location (z5 / arbitrate-01\n                  :location (z6 / country\n                        :name (z7 / name\n                              :op1 \"India\")))\n            :ARG1-of (z8 / mean-01\n                  :ARG2 (z9 / see-01\n                        :mode imperative\n                        :ARG0 (z10 / you)\n                        :ARG1 (z11 / section\n                              :mod 2\n                              :part-of (z12 / law\n                                    :name (z13 / name\n                                          :op1 \"Act\")))))))",
+      "coverage": 0.692,
+      "legal_concepts": [
+        "provision",
+        "statute"
+      ],
+      "legal_relations": {
+        ":legal-part-of": 1
+      },
+      "legal_names": [
+        "section 2(2)",
+        "Arbitration and Conciliation Act, 1996"
+      ],
+      "wiki_titles": [
+        "Arbitration_and_Conciliation_Act,_1996"
+      ]
+    },
+    {
+      "sentence_id": 360450,
+      "sentence_original": "The award was challenged under section 34 of the Act in Delhi High Court in July 2013.",
+      "sentence": "The award was challenged under section 34 of the Arbitration and Conciliation Act, 1996 in Delhi High Court in July 2013.",
+      "edits": [
+        {
+          "surface": "Act",
+          "occurrence": 1,
+          "replacement": "Arbitration and Conciliation Act, 1996",
+          "resolved_to": "a1",
+          "evidence": "article",
+          "kind": "statute",
+          "start": 49,
+          "end": 52
+        }
+      ],
+      "amr": "(c / challenge-01\n   :ARG1 (a / award)\n   :prep-under (p / provision\n                  :legal-level \"section\"\n                  :legal-name \"section 34\"\n                  :legal-part-of (s / statute\n                                    :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                                    :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (h / gov-entity\n                :legal-type \"court\"\n                :legal-name \"Delhi High Court\")\n   :time (d / date-entity\n            :year 2013\n            :month 7))",
+      "base_amr": "(z1 / challenge-01\n      :ARG1 (z2 / award-01)\n      :ARG2 (z3 / section\n            :mod 34\n            :part-of (z4 / law\n                  :name (z5 / name\n                        :op1 \"Act\")))\n      :location (z6 / government-organization\n            :name (z7 / name\n                  :op1 \"Delhi\"\n                  :op2 \"High\"\n                  :op3 \"Court\"))\n      :time (z8 / date-entity\n            :month 7\n            :year 2013))",
+      "coverage": 0.846,
+      "legal_concepts": [
+        "gov-entity",
+        "provision",
+        "statute"
+      ],
+      "legal_relations": {
+        ":legal-part-of": 1
+      },
+      "legal_names": [
+        "section 34",
+        "Arbitration and Conciliation Act, 1996",
+        "Delhi High Court"
+      ],
+      "wiki_titles": [
+        "Arbitration_and_Conciliation_Act,_1996"
+      ]
+    },
+    {
+      "sentence_id": 360465,
+      "sentence_original": "Of the many judgments submitted by the parties before the Supreme Court, the Court noted that the said controversy has to be governed by the principle laid down in Bharat Aluminium Company v.",
+      "sentence": "Of the many judgments submitted by the parties before the Supreme Court, the Supreme Court noted that the said controversy has to be governed by the principle laid down in Bharat Aluminium Company v.",
+      "edits": [
+        {
+          "surface": "the Court",
+          "occurrence": 1,
+          "replacement": "the Supreme Court",
+          "resolved_to": "c1",
+          "evidence": "article",
+          "kind": "gov-entity",
+          "start": 73,
+          "end": 82
+        }
+      ],
+      "amr": "(n / note-01\n   :ARG0 (c / gov-entity\n            :legal-type \"court\"\n            :legal-name \"Supreme Court\")\n   :ARG1 (c2 / controversy\n            :mod (s / say-01))\n   :ARG2 (g / govern-01\n            :ARG1 c2\n            :ARG2 (p / principle\n                     :mod (l / lay-01\n                             :ARG1 (b / company\n                                      :name (n2 / name\n                                               :op1 \"Bharat\"\n                                               :op2 \"Aluminium\"\n                                               :op3 \"Company\")))))\n   :location (j / judgment\n                :quant (m / many)))",
+      "base_amr": "(z1 / note-01\n      :ARG0 (z2 / government-organization\n            :name (z3 / name\n                  :op1 \"Supreme\"\n                  :op2 \"Court\"))\n      :ARG1 (z4 / obligate-01\n            :ARG2 (z5 / govern-01\n                  :ARG1 (z6 / controversy\n                        :ARG1-of (z7 / say-01))\n                  :ARG2 (z8 / principle\n                        :ARG1-of (z9 / lay-01\n                              :ARG2 (z10 / court-decision\n                                    :name (z11 / name\n                                          :op1 \"Bharat\"\n                                          :op2 \"Aluminium\"\n                                          :op3 \"Company\"\n                                          :op4 \"v.\"\n                                          :op5 \"Law\"))\n                              :mod (z12 / down)))))\n      :ARG1-of (z13 / include-91\n            :ARG2 (z14 / judge-01\n                  :quant (z15 / many)\n                  :ARG1-of (z16 / submit-01\n                        :ARG0 (z17 / party)\n                        :ARG2 z2\n                        :ARG3 (z18 / before\n                              :op1 z2)))))",
+      "coverage": 0.588,
+      "legal_concepts": [
+        "gov-entity",
+        "judgment"
+      ],
+      "legal_relations": {},
+      "legal_names": [
+        "Supreme Court"
+      ],
+      "wiki_titles": []
+    },
+    {
+      "sentence_id": 360477,
+      "sentence_original": "However it must be noted by the legislators that the Act still provides no reference to the concept of seat or venue of the arbitration and merely provides for the ‘place’ of arbitration.",
+      "sentence": "However it must be noted by the legislators that the Arbitration and Conciliation Act, 1996 still provides no reference to the concept of seat or venue of the arbitration and merely provides for the ‘place’ of arbitration.",
+      "edits": [
+        {
+          "surface": "Act",
+          "occurrence": 1,
+          "replacement": "Arbitration and Conciliation Act, 1996",
+          "resolved_to": "a1",
+          "evidence": "article",
+          "kind": "statute",
+          "start": 53,
+          "end": 56
+        }
+      ],
+      "amr": "(n / note-01\n   :ARG0 (l / legislator)\n   :ARG1 (p / provide-01\n            :polarity -\n            :ARG0 (a / statute\n                     :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                     :legal-name \"Arbitration and Conciliation Act, 1996\")\n            :ARG1 (r / reference\n                     :mod (c / concept\n                             :mod (s / seat-or-venue\n                                     :mod (a2 / arbitration))))\n            :ARG2 (p2 / provide-01\n                     :ARG0 a\n                     :ARG1 (p3 / place\n                              :mod (a3 / arbitration)))))",
+      "base_amr": "(z1 / obligate-01\n      :ARG2 (z2 / note-01\n            :ARG0 (z3 / person\n                  :ARG0-of (z4 / legislate-01))\n            :ARG1 (z5 / and\n                  :op1 (z6 / refer-03\n                        :polarity -\n                        :ARG0 (z7 / law\n                              :name (z8 / name\n                                    :op1 \"Act\"))\n                        :ARG1 (z9 / concept\n                              :topic (z10 / or\n                                    :op1 (z11 / seat\n                                          :location-of (z12 / arbitrate-01))\n                                    :op2 (z13 / venue\n                                          :location-of z12)))\n                        :mod (z14 / still))\n                  :op2 (z15 / provide-01\n                        :ARG0 z7\n                        :ARG1 (z16 / place\n                              :location-of z12)\n                        :mod (z17 / mere)))))",
+      "coverage": 0.625,
+      "legal_concepts": [
+        "statute"
+      ],
+      "legal_relations": {},
+      "legal_names": [
+        "Arbitration and Conciliation Act, 1996"
+      ],
+      "wiki_titles": [
+        "Arbitration_and_Conciliation_Act,_1996"
+      ]
+    }
+  ],
+  "rejected_records": [
+    {
+      "sentence_id": 360439,
+      "reason": "no_credible_source",
+      "original": "Ltd (‘HEPL’) entered into a contract with the Union of India in November, 1996 in relation to the extraction, development and production of hydrocarbons in a geographic block in India (“Block”).",
+      "candidates": []
+    }
+  ]
+}

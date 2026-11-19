@@ -1,0 +1,20 @@
+{
+  "sentence_id": 360450,
+  "broken_amr": "(c / challenge-01\n   :ARG1 (a / award)\n   :prep-under (p / provision\n                  :legal-level \"section\"\n                  :legal-name \"section 34\"\n                  :legal-part-of (s / statute\n                                    :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                                    :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (h / court\n                :legal-type \"court\"\n                :legal-name \"Delhi High Court\")\n   :time (d / date-entity\n            :year 2013\n            :month 7))",
+  "first_errors": [
+    ":legal-type may appear only on a gov-entity, got 'court'"
+  ],
+  "fixed": 1,
+  "remaining": 0,
+  "attempt": 1,
+  "final_amr": "(c / challenge-01\n   :ARG1 (a / award)\n   :prep-under (p / provision\n                  :legal-level \"section\"\n                  :legal-name \"section 34\"\n                  :legal-part-of (s / statute\n                                    :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                                    :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (h / gov-entity\n                :legal-type \"court\"\n                :legal-name \"Delhi High Court\")\n   :time (d / date-entity\n            :year 2013\n            :month 7))",
+  "sentence": "The award was challenged under section 34 of the Arbitration and Conciliation Act, 1996 in Delhi High Court in July 2013.",
+  "accepted": true,
+  "stats": {
+    "tool_rounds": 3,
+    "repairs": 1,
+    "repaired": 1,
+    "accepted": 1,
+    "rewrites": 1
+  }
+}

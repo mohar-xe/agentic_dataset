@@ -1,0 +1,1 @@
+{"article_id": 5772, "ts": "2026-11-17T06:12:43.905269+00:00", "sentences_total": 53, "sentences_accepted": 53, "sentences_rejected": 0, "rewrites": 6, "tool_rounds": 17, "repairs": 0, "tool_calls": {"article_search": 5, "resolve_mention": 5, "wiki_lookup": 5}, "rewrite_kinds": {"statute": 6}, "reject_reasons": {}, "ledger_size": 6}

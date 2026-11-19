@@ -1,0 +1,20 @@
+{
+  "articles_total": 1,
+  "articles_done": 1,
+  "sentences_total": 53,
+  "sentences_accepted": 53,
+  "sentences_rejected": 0,
+  "tool_calls": {
+    "article_search": 5,
+    "resolve_mention": 5,
+    "wiki_lookup": 5
+  },
+  "rewrites": 6,
+  "rewrites_by_kind": {
+    "statute": 6
+  },
+  "reject_reasons": {},
+  "tool_rounds": 17,
+  "repairs": 0,
+  "generated_at": "2026-11-17T06:51:59.395120+00:00"
+}
