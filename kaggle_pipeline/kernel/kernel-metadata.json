@@ -1,0 +1,14 @@
+{
+  "id": "mohar07/legal-amr-sat-spring-wiki",
+  "title": "legal-amr-sat-spring-wiki",
+  "code_file": "amr_sat_spring_wiki.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": ["mohar07/legal-amr-india-paragraphs"],
+  "competition_sources": [],
+  "kernel_sources": []
+}

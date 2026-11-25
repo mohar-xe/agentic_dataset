@@ -611,18 +611,17 @@ def build(section: Section) -> None:
 
     # ------------------------------------------------------------- settings
     y += 6
-    y = section.heading(y, "Settings you inherit")
+    y = section.heading(y, "Settings")
     y += 10
     settings = (
-        "read from dataset_amr/pipeline.config.json when it exists\n"
-        "  OpenRouter api_url + api_key + model\n"
-        "  corpus DB      dataset_amr/data/legal.db\n"
-        "  base graphs    dataset_amr/data/work/amr_spring.jsonl\n"
+        "read from config.json when it exists\n"
+        "  OpenRouter api_url + api_key + model (or AMR_* env vars)\n"
+        "  corpus DB      agentic_dataset/data/india.db\n"
+        "  base graphs    agentic_dataset/data/amr_spring.jsonl (optional)\n"
         "  wiki cache     agentic_dataset/data/agent/wiki_cache.sqlite\n"
         "\n"
         "priority\n"
-        "  defaults < dataset_amr/pipeline.config.json < config.json\n"
-        "           < environment < command line\n"
+        "  defaults < config.json < environment < command line\n"
         "\n"
         "work settings\n"
         "  batch size    8 sentences per model call\n"
@@ -1014,7 +1013,7 @@ def build_one(section: Section, start_y: float) -> float:
         "THE GRAPH\n"
         'SPRING: law :name "Act" · section :mod 34\n'
         "agent:  statute :legal-name + :wiki\n"
-        '        provision :legal-name "section 34" :legal-part-of\n'
+        '        provision :legal-name "section 34" :part-of\n'
         "        court -> gov-entity :legal-type \"court\"\n"
         "\n"
         "THE MEMORY\n"

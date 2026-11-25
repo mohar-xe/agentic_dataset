@@ -18,7 +18,6 @@ import threading
 import time
 from pathlib import Path
 
-import config  # noqa: F401  (puts the legacy scripts on sys.path)
 from common import validate_amr
 
 # Local SPRING checkpoint shipped with the amrlib setup used by the older

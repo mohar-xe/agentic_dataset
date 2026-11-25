@@ -61,11 +61,11 @@
   "graph_changes": {
     "360428": [
       "SPRING found a `law` node named 'Arbitration and Conciliation Act' (no year) inside `legislate-01`.",
-      "The agent made a `statute` node with :legal-name the full name, :legal-year 1996 and :wiki title, plus a `provision` node for 'Part one' linked with :legal-part-of."
+      "The agent made a `statute` node with :legal-name the full name, :legal-year 1996 and :wiki title, plus a `provision` node for 'Part one' linked with :part-of."
     ],
     "360429": [
       "SPRING output is itself invalid: `:mode imperative` is unquoted, and the core validator says variables used but never defined: ['imperative'].",
-      "SPRING has `section :mod 2` and `law :name Act`. The agent made a `provision` node with :legal-name 'section 2(2)' and linked it to the statute with :legal-part-of."
+      "SPRING has `section :mod 2` and `law :name Act`. The agent made a `provision` node with :legal-name 'section 2(2)' and linked it to the statute with :part-of."
     ],
     "360439": [
       "SPRING also reads the company name as only 'Ltd.' - the rest of the name is missing from the sentence itself.",
@@ -425,7 +425,7 @@
       "sentence_original": "For instance, Part one of the Indian arbitration legislation, i.e., the Arbitration and Conciliation Act, 1996 (the ‘Act’) has several provisions enabling Indian courts to interfere.",
       "sentence": "For instance, Part one of the Indian arbitration legislation, i.e., the Arbitration and Conciliation Act, 1996 (the ‘Act’) has several provisions enabling Indian courts to interfere.",
       "edits": [],
-      "amr": "(e / enable-01\n   :ARG0 (s / statute\n            :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n            :legal-name \"Arbitration and Conciliation Act, 1996\"\n            :legal-year 1996\n            :mod (i2 / india))\n   :ARG1 (p / provision\n            :legal-level \"part\"\n            :legal-name \"Part one\"\n            :legal-part-of s\n            :quant (sev / several))\n   :ARG2 (c / gov-entity\n            :legal-type \"court\"\n            :mod (i / indian))\n   :purpose (x / interfere-01\n               :ARG0 c)\n   :topic (a2 / arbitration))",
+      "amr": "(e / enable-01\n   :ARG0 (s / statute\n            :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n            :legal-name \"Arbitration and Conciliation Act, 1996\"\n            :legal-year 1996\n            :mod (i2 / india))\n   :ARG1 (p / provision\n            :legal-level \"part\"\n            :legal-name \"Part one\"\n            :part-of s\n            :quant (sev / several))\n   :ARG2 (c / gov-entity\n            :legal-type \"court\"\n            :mod (i / indian))\n   :purpose (x / interfere-01\n               :ARG0 c)\n   :topic (a2 / arbitration))",
       "base_amr": "(z1 / exemplify-01\n      :ARG0 (z2 / provide-01\n            :ARG0 (z3 / part\n                  :ord (z4 / ordinal-entity\n                        :value 1)\n                  :part-of (z5 / legislate-01\n                        :ARG1 (z6 / arbitrate-01)\n                        :mod (z7 / country\n                              :name (z8 / name\n                                    :op1 \"India\"))\n                        :ARG1-of (z9 / mean-01\n                              :ARG2 (z10 / law\n                                    :name (z11 / name\n                                          :op1 \"Arbitration\"\n                                          :op2 \"and\"\n                                          :op3 \"Conciliation\"\n                                          :op4 \"Act\")\n                                    :time (z12 / date-entity\n                                          :year 1996))))))\n      :ARG0-of (z13 / enable-01\n            :ARG1 (z14 / interfere-01\n                  :ARG0 (z15 / court\n                        :mod z7)))\n      :quant (z16 / several))",
       "coverage": 0.786,
       "legal_concepts": [
@@ -433,9 +433,7 @@
         "provision",
         "statute"
       ],
-      "legal_relations": {
-        ":legal-part-of": 1
-      },
+      "legal_relations": {},
       "legal_names": [
         "Arbitration and Conciliation Act, 1996",
         "Part one"
@@ -460,16 +458,14 @@
           "end": 102
         }
       ],
-      "amr": "(a / applicable\n   :polarity -\n   :ARG1 (p / provision\n            :legal-level \"sub-section\"\n            :legal-name \"section 2(2)\"\n            :legal-part-of (s / statute\n                              :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                              :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (i / india)\n   :condition (pl / place\n                 :mod (a2 / arbitration)))",
+      "amr": "(a / applicable\n   :polarity -\n   :ARG1 (p / provision\n            :legal-level \"sub-section\"\n            :legal-name \"section 2(2)\"\n            :part-of (s / statute\n                              :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                              :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (i / india)\n   :condition (pl / place\n                 :mod (a2 / arbitration)))",
       "base_amr": "(z1 / contrast-01\n      :ARG2 (z2 / apply-02\n            :ARG1 (z3 / they)\n            :mod (z4 / only)\n            :location (z5 / arbitrate-01\n                  :location (z6 / country\n                        :name (z7 / name\n                              :op1 \"India\")))\n            :ARG1-of (z8 / mean-01\n                  :ARG2 (z9 / see-01\n                        :mode imperative\n                        :ARG0 (z10 / you)\n                        :ARG1 (z11 / section\n                              :mod 2\n                              :part-of (z12 / law\n                                    :name (z13 / name\n                                          :op1 \"Act\")))))))",
       "coverage": 0.692,
       "legal_concepts": [
         "provision",
         "statute"
       ],
-      "legal_relations": {
-        ":legal-part-of": 1
-      },
+      "legal_relations": {},
       "legal_names": [
         "section 2(2)",
         "Arbitration and Conciliation Act, 1996"
@@ -494,7 +490,7 @@
           "end": 52
         }
       ],
-      "amr": "(c / challenge-01\n   :ARG1 (a / award)\n   :prep-under (p / provision\n                  :legal-level \"section\"\n                  :legal-name \"section 34\"\n                  :legal-part-of (s / statute\n                                    :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                                    :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (h / gov-entity\n                :legal-type \"court\"\n                :legal-name \"Delhi High Court\")\n   :time (d / date-entity\n            :year 2013\n            :month 7))",
+      "amr": "(c / challenge-01\n   :ARG1 (a / award)\n   :legal-cites (p / provision\n                  :legal-level \"section\"\n                  :legal-name \"section 34\"\n                  :part-of (s / statute\n                                    :wiki \"Arbitration_and_Conciliation_Act,_1996\"\n                                    :legal-name \"Arbitration and Conciliation Act, 1996\"))\n   :location (h / gov-entity\n                :legal-type \"court\"\n                :legal-name \"Delhi High Court\")\n   :time (d / date-entity\n            :year 2013\n            :month 7))",
       "base_amr": "(z1 / challenge-01\n      :ARG1 (z2 / award-01)\n      :ARG2 (z3 / section\n            :mod 34\n            :part-of (z4 / law\n                  :name (z5 / name\n                        :op1 \"Act\")))\n      :location (z6 / government-organization\n            :name (z7 / name\n                  :op1 \"Delhi\"\n                  :op2 \"High\"\n                  :op3 \"Court\"))\n      :time (z8 / date-entity\n            :month 7\n            :year 2013))",
       "coverage": 0.846,
       "legal_concepts": [
@@ -503,7 +499,7 @@
         "statute"
       ],
       "legal_relations": {
-        ":legal-part-of": 1
+        ":legal-cites": 1
       },
       "legal_names": [
         "section 34",

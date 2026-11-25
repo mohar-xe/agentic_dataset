@@ -21,7 +21,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT.parent / "dataset_amr" / "scripts"))
 
 from config import load_config  # noqa: E402
 from corpus import Corpus  # noqa: E402

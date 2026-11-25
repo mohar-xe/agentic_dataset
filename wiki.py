@@ -11,9 +11,12 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import re
 import sqlite3
 import threading
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -22,7 +25,13 @@ from typing import Any
 
 from corpus import _norm, head_of
 
-USER_AGENT = "agentic-dataset-amr/0.1 (research; deterministic lookup)"
+# Wikimedia asks for a descriptive User-Agent with contact information. Set
+# ``wiki.user_agent`` in config.json or ``AMR_WIKI_UA`` to your own URL/email;
+# a UA without contact details can be limited or blocked.
+DEFAULT_USER_AGENT = (
+    "agentic-dataset-amr/0.1 (research; deterministic lookup; "
+    "+https://github.com/your-org/agentic_dataset)"
+)
 
 STOPWORDS = {
     "the", "and", "for", "of", "in", "on", "at", "to", "a", "an", "by", "with",
@@ -148,6 +157,36 @@ class WikiCache:
         return value
 
 
+class _Throttle:
+    """Client-side politeness for the Wikimedia APIs.
+
+    The 2026 API limits are per minute and per identity; the published advice
+    is also to keep concurrency at 3 or fewer. ``per_minute`` spaces requests
+    globally, ``concurrent`` caps sockets in flight.
+    """
+
+    def __init__(self, per_minute: int, concurrent: int) -> None:
+        self.interval = 60.0 / per_minute if per_minute > 0 else 0.0
+        self._lock = threading.Lock()
+        self._next = 0.0
+        self._slots = threading.BoundedSemaphore(max(1, concurrent))
+
+    def __enter__(self) -> "_Throttle":
+        self._slots.acquire()
+        if self.interval:
+            with self._lock:
+                now = time.monotonic()
+                start = max(now, self._next)
+                self._next = start + self.interval
+                delay = start - now
+            if delay > 0:
+                time.sleep(delay)
+        return self
+
+    def __exit__(self, *exc: Any) -> None:
+        self._slots.release()
+
+
 class LiveWiki:
     """Live lookup against the English Wikipedia / Wikidata APIs."""
 
@@ -156,22 +195,56 @@ class LiveWiki:
         self.lang = cfg.get("lang", "en")
         self.timeout = cfg.get("timeout", 10)
         self.max_results = cfg.get("max_results", 5)
+        self.retries = int(cfg.get("retries", 2))
+        self.user_agent = (
+            cfg.get("user_agent") or os.environ.get("AMR_WIKI_UA")
+            or DEFAULT_USER_AGENT
+        )
+        self._throttle = _Throttle(
+            int(cfg.get("max_per_minute", 180)),
+            int(cfg.get("concurrent", 3)),
+        )
         self.cache = WikiCache(cfg["cache"])
+
+    @staticmethod
+    def _retry_delay(exc: urllib.error.HTTPError, attempt: int) -> float:
+        try:
+            return max(1.0, float((exc.headers or {}).get("Retry-After")))
+        except (AttributeError, TypeError, ValueError):
+            return min(60.0, 5.0 * (2 ** attempt))
 
     def _fetch(self, host: str, params: dict[str, Any]) -> dict:
         params = {**params, "format": "json"}
         url = host + "?" + urllib.parse.urlencode(params)
         cache_key = url
         cached = self.cache.get(cache_key)
-        if cached is not None:
+        # Old caches stored transient failures; treat them as a miss.
+        if cached is not None and "_error" not in cached:
             return cached
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-        try:
-            with urllib.request.urlopen(req, timeout=self.timeout) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-        except Exception as exc:  # network issues are not fatal to the run
-            data = {"_error": str(exc)}
-        return self.cache.set(cache_key, data, kind="api")
+        attempts = self.retries + 1
+        for attempt in range(attempts):
+            req = urllib.request.Request(
+                url,
+                headers={
+                    "User-Agent": self.user_agent,
+                    "Accept": "application/json",
+                },
+            )
+            try:
+                with self._throttle:
+                    with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                        data = json.loads(resp.read().decode("utf-8"))
+                # Only successful responses are cached; a 429 or a timeout must
+                # not poison the cache for later runs.
+                return self.cache.set(cache_key, data, kind="api")
+            except urllib.error.HTTPError as exc:
+                if exc.code in (429, 503) and attempt < attempts - 1:
+                    time.sleep(self._retry_delay(exc, attempt))
+                    continue
+                return {"_error": f"HTTP {exc.code}: {exc.reason}"}
+            except Exception as exc:  # network issues are not fatal to the run
+                return {"_error": str(exc)}
+        return {"_error": "request failed"}
 
     def lookup(self, surface: str, context: str = "") -> list[dict[str, Any]]:
         """Ranked candidates for ``surface`` (live, cached)."""

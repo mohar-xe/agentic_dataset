@@ -1,0 +1,43 @@
+{
+  "corpus_db": "data/india.db",
+  "base_graphs": "data/amr_spring.jsonl",
+  "out": "data/runs/full",
+  "limit": 0,
+  "min_sentences": 5,
+  "workers": 100,
+  "model": "PUT-YOUR-MODEL-NAME-HERE",
+  "llm": {
+    "api_url": "https://openrouter.ai/api/v1",
+    "api_key": "PUT-YOUR-API-KEY-HERE",
+    "timeout": 180,
+    "retries": 5,
+    "temperature": 0.0,
+    "max_tokens": 6000
+  },
+  "agent": {
+    "batch_size": 8,
+    "max_tool_rounds": 6,
+    "max_repairs": 2
+  },
+  "rewrite": {
+    "enabled": true,
+    "kinds": "all",
+    "on_ambiguous": "reject",
+    "max_per_sentence": 4,
+    "max_growth_chars": 160
+  },
+  "wiki": {
+    "enabled": true,
+    "lang": "en",
+    "timeout": 10,
+    "max_results": 5,
+    "user_agent": "agentic-dataset-amr/0.1 (https://example.org/you; you@example.org)",
+    "concurrent": 3,
+    "max_per_minute": 180,
+    "retries": 2,
+    "cache": "data/runs/full/wiki_cache.sqlite"
+  },
+  "seed": 13,
+  "train": 0.8,
+  "dev": 0.1
+}

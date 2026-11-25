@@ -197,6 +197,9 @@ class ToolBox:
             "errors": parsed.get("errors") or [],
             "parser": parsed.get("parser"),
             "model": parsed.get("model"),
+            # "cache" or "model": useful when checking whether the precomputed
+            # base graphs actually match the agent's sentence splits.
+            "source": parsed.get("source"),
         }
         if parsed.get("n_nodes") is not None:
             result["n_nodes"] = parsed["n_nodes"]

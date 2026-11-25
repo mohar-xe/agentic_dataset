@@ -29,7 +29,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT.parent / "dataset_amr" / "scripts"))
 
 from config import load_config  # noqa: E402
 
@@ -59,7 +58,7 @@ GRAPHS = {
    :ARG1 (p / provision
             :legal-level "part"
             :legal-name "Part one"
-            :legal-part-of s
+            :part-of s
             :quant (sev / several))
    :ARG2 (c / gov-entity
             :legal-type "court"
@@ -72,7 +71,7 @@ GRAPHS = {
    :ARG1 (p / provision
             :legal-level "sub-section"
             :legal-name "section 2(2)"
-            :legal-part-of (s / statute
+            :part-of (s / statute
                               :wiki "{WIKI}"
                               :legal-name "{ACT}"))
    :location (i / india)
@@ -80,10 +79,10 @@ GRAPHS = {
                  :mod (a2 / arbitration)))""",
     360450: f"""(c / challenge-01
    :ARG1 (a / award)
-   :prep-under (p / provision
+   :legal-cites (p / provision
                   :legal-level "section"
                   :legal-name "section 34"
-                  :legal-part-of (s / statute
+                  :part-of (s / statute
                                     :wiki "{WIKI}"
                                     :legal-name "{ACT}"))
    :location (h / gov-entity
@@ -211,7 +210,7 @@ GRAPH_CHANGES = {
         "(no year) inside `legislate-01`.",
         "The agent made a `statute` node with :legal-name the full name, "
         ":legal-year 1996 and :wiki title, plus a `provision` node for "
-        "'Part one' linked with :legal-part-of.",
+        "'Part one' linked with :part-of.",
     ],
     360429: [
         "SPRING output is itself invalid: `:mode imperative` is unquoted, and "
@@ -219,7 +218,7 @@ GRAPH_CHANGES = {
         "['imperative'].",
         "SPRING has `section :mod 2` and `law :name Act`. The agent made a "
         "`provision` node with :legal-name 'section 2(2)' and linked it to "
-        "the statute with :legal-part-of.",
+        "the statute with :part-of.",
     ],
     360439: [
         "SPRING also reads the company name as only 'Ltd.' - the rest of the "

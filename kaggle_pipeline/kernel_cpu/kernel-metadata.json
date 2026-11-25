@@ -1,0 +1,15 @@
+{
+  "id": "mohar07/legal-amr-parse-cpu",
+  "title": "legal-amr-parse-cpu",
+  "code_file": "parse_cpu.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "mohar07/legal-amr-picked"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

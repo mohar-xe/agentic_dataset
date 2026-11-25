@@ -7,12 +7,7 @@ rewrites. It is kept short and explicit: cold efficiency, no long examples.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import Any
-
-from config import LEGACY_SCRIPTS
-
-RULES = (Path(LEGACY_SCRIPTS) / ".." / "prompts" / "legal_amr_edit.txt").resolve()
 
 
 def system_prompt(cfg: dict) -> str:
@@ -69,13 +64,28 @@ def system_prompt(cfg: dict) -> str:
         "sentence must appear in the AMR, and every introduced name in the AMR "
         "must be backed by an edit (or be literally present in the original).\n\n"
         "AMR RULES: produce a single-rooted, balanced PENMAN graph following "
-        "Legal-AMR Lean Core (7 concepts: statute, regulation, provision, "
-        "gov-entity, judgment, notification, legal-instrument; 16 :legal-* "
-        "relations; :legal-* attributes such as :legal-name, :legal-level, "
-        ":legal-type, :legal-status, :legal-valid-from/until). Keep core AMR "
-        "roles intact. Name every specific instrument/body in :legal-name. "
-        "Resolve 'the Act'/'the Board' to the actual entity when evidence "
-        "exists; otherwise do not invent a name.\n\n"
+        "Legal-AMR Lean Core v1.1. Legal tags are additive and :legal- "
+        "namespaced; core AMR always wins when it can express the relation.\n"
+        "- 7 concepts: statute, regulation, provision, gov-entity, judgment, "
+        "notification, legal-instrument.\n"
+        "- 12 relations: :legal-cites, :legal-overrules, :legal-amends, "
+        ":legal-repeals, :legal-notifies, :legal-implements, "
+        ":legal-applies-to, :legal-exempts, :legal-empowers, "
+        ":legal-delegates-to, :legal-administered-by, :legal-defines.\n"
+        "- 11 attributes (plus optional :legal-weight): :legal-name, "
+        ":legal-level, :legal-type, :legal-year, :legal-jurisdiction, "
+        ":legal-citation, :legal-status, :legal-valid-from, "
+        ":legal-valid-until, :legal-enacted-on, :legal-notified-on.\n"
+        "Keep core AMR roles intact. For legal containment use core :part-of "
+        "(child -> parent), not :legal-part-of. For anaphora ('the said Act') "
+        "reuse the antecedent variable, not :legal-antecedent. Use "
+        ":legal-cites for a citation and :legal-weight (binding/persuasive/"
+        "obiter) for its strength; use :legal-applies-to, not :legal-governs. "
+        "Never put :ARG0-:ARG5 directly on a bare-noun legal concept: link it "
+        "through a predicate with :ARGn-of (for example :ARG1-of (r / "
+        "render-01 :ARG0 (court))). Name every specific instrument/body in "
+        ":legal-name. Resolve 'the Act'/'the Board' to the actual entity when "
+        "evidence exists; otherwise do not invent a name.\n\n"
         "OUTPUT: return one JSON object with key 'results', an array with one "
         "entry per sentence, in reading order. Each entry names the sentence "
         "you split with 'original' — exactly the text you passed to "

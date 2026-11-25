@@ -17,14 +17,8 @@ from __future__ import annotations
 
 import json
 import re
-import sys
 from dataclasses import asdict, dataclass
-from pathlib import Path
-from typing import Any, Iterable
-
-_LEGACY = str(Path(__file__).resolve().parent.parent / "dataset_amr" / "scripts")
-if _LEGACY not in sys.path:
-    sys.path.insert(0, _LEGACY)
+from typing import Any
 
 from common import extract_json_payload, validate_amr  # noqa: E402
 from corpus import GENERIC_WORDS, _SINGULAR, _norm  # noqa: E402

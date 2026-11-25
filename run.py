@@ -5,9 +5,8 @@ Each article is one independent task, so ``--workers`` runs them in parallel
 and ``--shard i/n`` splits a corpus across machines. Resumption, repair and the
 append-only sinks are unchanged by parallelism.
 
-API/DB settings are inherited from the older ``dataset_amr`` project
-(``pipeline.config.json``) when present, then from ``config.json``, then from
-the environment, then from CLI flags.
+API/DB settings come from ``config.py``, then ``config.json``, then the
+environment, then CLI flags. Nothing is read from the older project.
 """
 
 from __future__ import annotations
@@ -19,8 +18,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-# config must be imported first: it puts legacy scripts on sys.path
-from config import LEGACY_SCRIPTS, load_config, out_dir  # noqa: F401
+from config import load_config, out_dir
 
 from agent import ArticleAgent, _paragraph_batches
 from build import build
@@ -90,8 +88,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--api-key", default=None)
     p.add_argument("--corpus", default=None, help="corpus sqlite path")
     p.add_argument("--base-graphs", default=None, help="SPRING graphs jsonl")
-    p.add_argument("--no-inherit", action="store_true",
-                   help="do not read the older pipeline.config.json")
+    p.add_argument("--out", default=None, help="output directory")
     return p.parse_args()
 
 
@@ -115,6 +112,8 @@ def apply_cli_overrides(cfg: dict, args: argparse.Namespace) -> dict:
         cfg["corpus_db"] = args.corpus
     if args.base_graphs:
         cfg["base_graphs"] = args.base_graphs
+    if args.out:
+        cfg["out"] = args.out
     if args.workers:
         cfg["workers"] = args.workers
     return cfg
@@ -307,9 +306,15 @@ def run_article_mock(cfg, corpus, wiki, sink, log, article, base, spring):
 
 def main() -> None:
     args = parse_args()
-    overrides = {"inherit_old_config": False} if args.no_inherit else None
-    cfg = apply_cli_overrides(load_config(args.config, overrides), args)
+    cfg = apply_cli_overrides(load_config(args.config), args)
     out = out_dir(cfg)
+    corpus_path = Path(cfg["corpus_db"])
+    if not corpus_path.exists():
+        raise SystemExit(
+            f"corpus database not found: {corpus_path}\n"
+            "put the India-only database at data/india.db, or build it with\n"
+            "  python make_india_db.py --source /path/to/legal.db"
+        )
     corpus = Corpus(cfg["corpus_db"])
     wiki = LiveWiki(cfg["wiki"])
     sink = OutputSink(out)
@@ -321,8 +326,8 @@ def main() -> None:
     if not args.mock:
         if not cfg["llm"]["api_url"] or not cfg["model"]:
             raise SystemExit(
-                "real run needs an LLM: set --api-url/--model or inherit "
-                "dataset_amr/pipeline.config.json (or use --mock)"
+                "real run needs an LLM: set --api-url/--model or AMR_API_URL/"
+                "AMR_MODEL in the environment (or use --mock)"
             )
     wanted: set[int] = set()
     for aid in ids:
@@ -331,12 +336,17 @@ def main() -> None:
     # an earlier SPRING run saves the model call.
     base = load_base_graphs(cfg["base_graphs"], wanted)
     spring = SpringParser(cache=base, allow_placeholder=args.mock)
+    missing = wanted.difference(base)
     if not args.mock:
-        try:
-            spring.load()
-        except RuntimeError as exc:
-            raise SystemExit(
-                f"spring_parse needs the local SPRING parser: {exc}")
+        if missing:
+            try:
+                spring.load()
+            except RuntimeError as exc:
+                raise SystemExit(
+                    f"spring_parse needs the local SPRING parser: {exc}")
+        else:
+            print(f"spring_parse: all {len(wanted)} sentence(s) are cached; "
+                  "the model is not loaded", file=sys.stderr)
     if base:
         print(f"spring_parse warm cache: {len(base)} graph(s) for the selected "
               f"sentences", file=sys.stderr)

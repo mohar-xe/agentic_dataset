@@ -9,9 +9,9 @@ Working dir: `agentic_dataset/`. Plan: per-article thin agent, sequential senten
 - [x] `wiki.py` – live Wikipedia/Wikidata lookup, SQLite cache (no local title DB)
 - [x] `store.py` – per-article event log, append-only records/rejections, checkpoints, stats
 - [x] `rewrite.py` – span-based edits, recomputed offsets, graph↔sentence invariant
-- [x] `check.py` – `penman` + `legal_schema` (reused by path) + rewrite checks
+- [x] `check.py` – `penman` + local `legal_schema` (Legal-AMR v1.1) + rewrite checks
 - [x] `tools.py` – schemas + dispatch: `article_search`, `resolve_mention`, `wiki_lookup`, `check_amr`
-- [x] `prompt.py` – system prompt with tool contract, rewrite contract, lean-core rules
+- [x] `prompt.py` – system prompt with tool contract, rewrite contract, v1.1 lean-core rules
 - [x] `llm.py` – OpenAI-compatible tool loop + `MockClient` (script replay)
 - [x] `agent.py` – per-article sequential batches, running ledger, accept/reject, checkpoint after each batch
 - [x] `run.py` – CLI `--article/--all/--mock/--build/--example/--rewrite-*`, per-batch mock, resume
@@ -40,7 +40,9 @@ Working dir: `agentic_dataset/`. Plan: per-article thin agent, sequential senten
 - [x] Paragraph-in agent: the batch carries whole paragraphs (no sentence list, no pre-computed graphs); the agent splits them, calls `spring_parse` once per sentence (parallel calls in one turn, `llm.run_tool_calls`), and edits the returned graph; it never sees a corpus sentence id, the harness matches answers back by sentence text; a sentence it did not parse is rejected as `no_base_graph`; `--base-graphs` is only a warm cache; verified end to end on article 5772 with 53 `spring_parse` calls (live SPRING blocked by an amrlib/transformers version skew in this venv, see `docs/changes_2026-11-17.md`)
 - [x] Repair turns on validation failure (bounded by `agent.max_repairs`, same conversation + validator errors + tools); policy rejections are never repaired into guesses
 - [x] Per-article parallelism (`--workers`, `--shard i/n`), thread-safe sinks (`claim`), per-thread corpus + WAL wiki cache
-- [x] Inherit older `dataset_amr/pipeline.config.json` (OpenRouter API URL/key/model, export limit, DB/SPRING paths); env + CLI overrides
+- [x] Self-contained config (no older `dataset_amr` imports or config files); env + CLI overrides; India-only `data/india.db`
+- [x] Legal-AMR Lean Core v1.1: local `legal_schema.py` (7 concepts, 12 relations, 11 attributes + optional `:legal-weight`), pruned labels rejected with migration hints, core `:part-of` and variable reentrancy required; prompt updated; spec examples 6.1–6.7 pass
+- [x] Drawing: a plain-language v1.1 panel beside the final diagram (`docs/build_lean_extension.py`), with a worked example and the removal reasons; older diagrams left unchanged
 - [x] Verified: parallel mock run of 3 articles with 3 workers (177 accepted, rewrites counted, examples rendered)
 - [x] Verified: repair path (broken graph -> repair pass -> accepted, events `repair_start`/`repair_result`); documented with a real worked example in `data/five_repair/report.json` and the drawing
 - [x] Verified: completed articles are skipped on rerun
@@ -48,3 +50,11 @@ Working dir: `agentic_dataset/`. Plan: per-article thin agent, sequential senten
 - [ ] Tune prompt / ledger size from real traces
 - [ ] Pilot on N articles, compare to route-2 (valid rate, relations, wiki, rewrites, rejections, tokens)
 - [ ] `build.py` split/dedupe compatible with existing consumers where possible
+
+## Scale-out
+
+- [x] `precompute_spring.py`: batched, resumable, shardable SPRING warm cache; `run.py` skips loading the model when every selected sentence is cached
+- [x] `run.py --out` for a clean output directory; clear error when the corpus database is missing
+- [x] `requirements.txt` (transformers 4.36.2, amrlib 0.8.1), `config.example.json`, and `data/README.md` for a fresh clone
+- [ ] Ship `data/india.db` (about 54 MB) or a download link: a git clone alone does not include it
+- [ ] Measure a real 100-worker run against the provider's rate limit; tune `--workers` from traces

@@ -60,10 +60,10 @@ BASE_GRAPH = """(z1 / challenge-01
 
 FINAL_GRAPH = """(c / challenge-01
    :ARG1 (a / award)
-   :prep-under (p / provision
+   :legal-cites (p / provision
                   :legal-level "section"
                   :legal-name "section 34"
-                  :legal-part-of (s / statute
+                  :part-of (s / statute
                                     :wiki "Arbitration_and_Conciliation_Act,_1996"
                                     :legal-name "Arbitration and Conciliation Act, 1996"))
    :location (h / gov-entity
@@ -245,7 +245,7 @@ def build() -> float:
              "• “section” + number 34 → provision “section 34”, linked to it\n"
              "• “government-organization” → court, named “Delhi High Court”\n"
              "• “award-01” (the act of awarding) → “award” (the thing)\n"
-             "• “under” → the legal link “prep-under”\n"
+             "• “under” → the legal citation link “legal-cites”\n"
              "• kept as it was: the root “challenge”, the court, July 2013",
              "#fff3bf", "#f59e0b", "#b45309", chars=72)
 
